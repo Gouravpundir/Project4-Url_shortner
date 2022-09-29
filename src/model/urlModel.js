@@ -8,13 +8,12 @@ const urlSchema = new mongoose.Schema({
     },
     shortUrl: {
         type: String,
-        umique: true
+        unique: true
     },
     urlCode: {
         type: String,
         unique: true,
-        trim: true,
-        default: "demo"
+        trim: true
     }
 })
 
