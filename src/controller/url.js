@@ -26,7 +26,7 @@ module.exports = {
             })
         }
         let baseUrl = 'http://localhost:3000'
-        let urlCode = shortID.generate()
+        let urlCode = shortID.generate().toLowerCase()
         let shortUrl = baseUrl + '/' + urlCode
 
         let checkLongUrl = await urlModel.findOne({longUrl: longUrl})
@@ -50,5 +50,24 @@ module.exports = {
             msg: e.message
         })
     }
+    },
+
+
+    getUrl: async (req, res) => {
+        try{
+            let findURL = await urlModel.findOne({urlCode: req.params.urlCode})
+            if(!findURL){
+              return   res.status(404).send({
+                    status: false,
+                    msg: "No such urlCode found!"
+                })
+            }
+            return   res.redirect(findURL.longUrl)
+        }catch(e){
+            res.status(500).send({
+                status: false,
+                msg: e.message
+            })
+        }
     }
 }

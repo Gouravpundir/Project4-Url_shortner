@@ -11,6 +11,12 @@ router.post(
     controller.createShortURL
 )
 
+//get LongURL
+
+router.get(
+    '/:urlCode',
+    controller.getUrl
+)
 
 
 
