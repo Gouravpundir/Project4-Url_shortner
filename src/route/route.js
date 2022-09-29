@@ -1,5 +1,19 @@
 const express = require("express");
 const router = express.Router();
+const controller = require('../controller/url')
+
+
+
+//create short URL
+
+router.post(
+    '/url/shorten',
+    controller.createShortURL
+)
+
+
+
+
 
 
 //=========================== if endpoint is not correct==========================================
