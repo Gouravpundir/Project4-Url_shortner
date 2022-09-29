@@ -1,6 +1,8 @@
 const shortID = require('shortid')
 const validURL = require('valid-url')
+const axios = require('axios')
 const urlModel = require('../model/urlModel')
+
 
 
 module.exports = {
@@ -19,15 +21,6 @@ module.exports = {
                 msg: "LongURL is a mandatory field!"
             })
         }
-        if(!validURL.isUri(longUrl)){
-            return  res.status(400).send({
-                status: true,
-                msg: "The URL is incorrect!"
-            })
-        }
-        let baseUrl = 'http://localhost:3000'
-        let urlCode = shortID.generate().toLowerCase()
-        let shortUrl = baseUrl + '/' + urlCode
 
         let checkLongUrl = await urlModel.findOne({longUrl: longUrl})
         if(checkLongUrl){
@@ -37,6 +30,23 @@ module.exports = {
                 data: checkLongUrl
             })
         }
+
+        let correctLink = false
+        await axios.get(longUrl)
+            .then((res) => {
+                if (res.status == 200 || res.status == 201) {
+                        correctLink = true;
+                }
+            })
+        .catch((error) => { correctLink = false })
+
+        if(!correctLink){
+            return res.status(400).send({ status: false, message: "Not a Valid URL !" })
+        }
+        let baseUrl = 'http://localhost:3000'
+        let urlCode = shortID.generate().toLowerCase()
+        let shortUrl = baseUrl + '/' + urlCode
+
         let createURL = await urlModel.create({longUrl, shortUrl, urlCode})
         res.status(201).send({
             status: true,
