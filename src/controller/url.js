@@ -1,5 +1,4 @@
 const shortID = require('shortid')
-const validURL = require('valid-url')
 const axios = require('axios')
 const urlModel = require('../model/urlModel')
 
@@ -19,6 +18,12 @@ module.exports = {
             return  res.status(400).send({
                 status: true,
                 msg: "LongURL is a mandatory field!"
+            })
+        }
+        if(typeof(longUrl) != 'string'){
+            return  res.status(400).send({
+                status: true,
+                msg: "LongURL can be in a String only!"
             })
         }
 
@@ -72,7 +77,7 @@ module.exports = {
                     msg: "No such urlCode found!"
                 })
             }
-            return   res.redirect(findURL.longUrl)
+            return   res.status(302).redirect(findURL.longUrl)
         }catch(e){
             res.status(500).send({
                 status: false,

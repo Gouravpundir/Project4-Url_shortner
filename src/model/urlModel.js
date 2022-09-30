@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const shortID = require('shortid')
+
 
 const urlSchema = new mongoose.Schema({
     longUrl: {
@@ -14,8 +14,10 @@ const urlSchema = new mongoose.Schema({
     urlCode: {
         type: String,
         unique: true,
-        trim: true
+        trim: true,
+        required: true,
+        lowerCse: true
     }
 })
 
-module.exports = mongoose.model('urlModel', urlSchema)
+module.exports = mongoose.model('url', urlSchema)
