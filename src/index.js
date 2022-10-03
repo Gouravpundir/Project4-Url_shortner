@@ -3,7 +3,6 @@ const route = require("./route/route.js");
 const app = express();
 const mongoose = require("mongoose");
 
-
 app.use(express.json());
 
 mongoose
@@ -14,7 +13,8 @@ mongoose
     }
   )
   .then(() => console.log("MongoDB is connected"))
-  .catch((err) => console.log(err));
+  .catch((err) => console.log(err))
+  
 
 app.use("/", route);
 
