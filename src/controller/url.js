@@ -2,7 +2,7 @@ const shortID = require('shortid')
 const axios = require('axios')
 const urlModel = require('../model/urlModel')
 const redis = require('redis')
-const { promisify } = require("util")
+const {promisify} = require("util")
 
 
 const redisClient = redis.createClient(
@@ -46,10 +46,22 @@ module.exports = {
                 msg: "LongURL can be in a String only!"
             })
         }
+        let cacheUrl = await GET_ASYNC(`${req.body.longUrl}`)
+        if(cacheUrl){
+            cacheUrl = JSON.parse(cacheUrl)
+            return  res.status(200).send({
+                status: true,
+                msg: "This URL is already present!",
+                data: cacheUrl
+            })
+        }
 
         let checkLongUrl = await urlModel.findOne({longUrl: longUrl})
         if(checkLongUrl){
-           return  res.status(200).send({
+           
+            await SET_ASYNC(`${checkLongUrl.longUrl}`, JSON.stringify(checkLongUrl))
+          
+            return  res.status(200).send({
                 status: true,
                 msg: "This URL is already present!",
                 data: checkLongUrl
@@ -102,7 +114,7 @@ module.exports = {
                     msg: "No such urlCode found!"
                 })
             }
-            let storeCache = await SET_ASYNC(`${req.params.urlCode}`, JSON.stringify(findURL))
+            await SET_ASYNC(`${req.params.urlCode}`, JSON.stringify(findURL))
             return   res.status(302).redirect(findURL.longUrl)
         }catch(e){
             res.status(500).send({
