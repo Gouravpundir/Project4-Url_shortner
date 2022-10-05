@@ -30,19 +30,19 @@ module.exports = {
         let {longUrl} = req.body
         if(!Object.keys(req.body).length){
             return  res.status(400).send({
-                status: true,
+                status: false,
                 msg: "Please send some DATA in the request body!"
             })
         }
         if(!longUrl){
             return  res.status(400).send({
-                status: true,
+                status: false,
                 msg: "LongURL is a mandatory field!"
             })
         }
         if(typeof(longUrl) != 'string'){
             return  res.status(400).send({
-                status: true,
+                status: false,
                 msg: "LongURL can be in a String only!"
             })
         }
@@ -80,6 +80,7 @@ module.exports = {
         if(!correctLink){
             return res.status(400).send({ status: false, message: "Not a Valid URL !" })
         }
+
         let baseUrl = 'http://localhost:3000'
         let urlCode = shortID.generate().toLowerCase()
         let shortUrl = baseUrl + '/' + urlCode
