@@ -24,8 +24,7 @@ const GET_ASYNC = promisify(redisClient.GET).bind(redisClient)
 
 //----------------------------------create url--------------------------------------//
   
-module.exports = {
-    createShortURL: async(req, res) => {
+const createShorturl = async function (req, res) {
     try {
       let originalUrl = req.body.longUrl;
       if (!originalUrl) {
@@ -83,12 +82,12 @@ module.exports = {
     } catch (err) {
       res.status(500).send({ status: false, msg: err.message });
     }
-  },
+  }
 
 
 //----------------------------get url-----------------------------------------//
 
-    getUrl: async (req, res) => {
+const fetchUrlData = async function (req, res) {
         try{
             let cacheUrl = await GET_ASYNC(`${req.params.urlCode}`)
             if(cacheUrl){
@@ -111,4 +110,5 @@ module.exports = {
             })
         }
     }
-}
+
+    module.exports = { createShorturl, fetchUrlData };
