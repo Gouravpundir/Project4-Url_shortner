@@ -8,16 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sonalgill/Project-URL-shortner.git"
+    "url": "https://github.com/Gouravpundir/Project4-Url_shortner.git"
   },
   "author": "Sonal Gill, Bittu Mishra",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sonalgill/Project-URL-shortner/issues"
+    "url": "https://github.com/Gouravpundir/Project4-Url_shortner.git"
   },
-  "homepage": "https://github.com/sonalgill/Project-URL-shortner#readme",
+  "homepage": "https://github.com/Gouravpundir/Project4-Url_shortner.git#readme",
   "dependencies": {
-    "axios": "^0.27.2",
     "express": "^4.18.1",
     "mongoose": "^6.6.2",
     "nodemon": "^2.0.20",
